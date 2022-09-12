@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mdp.Bluetooth.BluetoothActivity;
+import com.example.mdp.Bluetooth.BluetoothConnectionService;
 import com.example.mdp.MainActivity;
 import com.example.mdp.R;
 import com.example.mdp.map.Maze;
@@ -84,6 +86,12 @@ public class ConfigurationFragment extends Fragment {
                 Log.d(TAG, obstacleMessage);
                 // write message
                 //Add Bluetooth connection instructions here @BT
+                try {
+                    BluetoothConnectionService.sendBT(obstacleMessage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Make sure Bluetooth is connected", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });

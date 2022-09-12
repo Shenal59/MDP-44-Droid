@@ -383,6 +383,10 @@ public class BluetoothConnectionService {
         mConnectedThread.write(out);
     }
 
+    public static void sendBT(String sentText) throws Exception{
+        byte[] bytes = sentText.getBytes(Charset.defaultCharset());
+        BluetoothConnectionService.write(bytes);
+    }
 }
 
 
