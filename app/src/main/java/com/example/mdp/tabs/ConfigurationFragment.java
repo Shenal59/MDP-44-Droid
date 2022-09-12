@@ -1,5 +1,6 @@
 package com.example.mdp.tabs;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.mdp.Bluetooth.BluetoothActivity;
 import com.example.mdp.MainActivity;
 import com.example.mdp.R;
 import com.example.mdp.map.Maze;
@@ -92,6 +94,8 @@ public class ConfigurationFragment extends Fragment {
             @Override
             public void onClick(View view){
                 //Add Bluetooth connection instructions here @BT
+                Intent myIntent = new Intent(view.getContext(), BluetoothActivity.class);
+                startActivityForResult(myIntent, 0);
             }
         });
 
