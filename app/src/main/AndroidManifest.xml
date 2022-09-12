@@ -14,10 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mdp">
-        <activity
-            android:name=".BluetoothPopUp"
-            android:exported="true"
-            android:parentActivityName=".bluetooth_home"/>
+<!--        <activity-->
+<!--            android:name=".BluetoothPopUp"-->
+<!--            android:exported="true"-->
+<!--            android:parentActivityName=".bluetooth_home"/>-->
+        <activity android:name=".Bluetooth.BluetoothActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

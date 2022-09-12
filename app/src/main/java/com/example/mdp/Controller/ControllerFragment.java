@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.example.mdp.Bluetooth.BluetoothConnectionService;
 import com.example.mdp.MainActivity;
 import com.example.mdp.R;
 import com.example.mdp.tabs.PageViewModel;
@@ -66,6 +68,12 @@ public class ControllerFragment extends Fragment {
             public void onClick(View view){
                 map.moveRobot("forward");//prevention of movement outside of the map is done inside moveRobot function itself
                 //Add Bluetooth connection instructions here @BT
+                try {
+                    BluetoothConnectionService.sendBT("w");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Make sure Bluetooth is connected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -74,6 +82,12 @@ public class ControllerFragment extends Fragment {
             public void onClick(View view){
                 map.moveRobot("reverse");
                 //Add Bluetooth connection instructions here @BT
+                try {
+                    BluetoothConnectionService.sendBT("s");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Make sure Bluetooth is connected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -82,6 +96,12 @@ public class ControllerFragment extends Fragment {
             public void onClick(View view){
                 map.moveRobot("left");
                 //Add Bluetooth connection instructions here @BT
+                try {
+                    BluetoothConnectionService.sendBT("a");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Make sure Bluetooth is connected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -90,6 +110,12 @@ public class ControllerFragment extends Fragment {
             public void onClick(View view){
                 map.moveRobot("right");
                 //Add Bluetooth connection instructions here @BT
+                try {
+                    BluetoothConnectionService.sendBT("d");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Make sure Bluetooth is connected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
