@@ -728,6 +728,22 @@ public class Maze extends View implements Serializable {
         invalidate();
     }
 
+    public void rotateObstacleFaceByObsID(int obsID){
+        for (Obstacle obstacles : obstacleList) {
+            //Check if obstacle in touched.
+            if(obstacles.getObsID().equals(Integer.toString(obsID))){
+                if(obstacles.getTouchCount() >= 5){
+                    obstacles.resetTouchCount();
+                    obstacles.setObsFace(obstacles.getTouchCount());
+                } else {
+                    obstacles.incrTouchCount();
+                    obstacles.setObsFace(obstacles.getTouchCount());
+                }
+            }
+        }
+        invalidate();
+    }
+
     public void setRobotDirection(String direction){
         Log.d(TAG,"setRobotDirection");
         if(direction.equals("N")){
