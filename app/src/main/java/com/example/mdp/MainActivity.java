@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         gridMap = findViewById(R.id.mapView);
 
         //
-//        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("incomingMessage"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("incomingMessage"));
 
         //setting up the tab layout with controls etc
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra("receivedMessage");
+            String message = intent.getStringExtra("theMessage");
             Log.d(TAG,message);
             gridMap.updateMap(message);
         }
