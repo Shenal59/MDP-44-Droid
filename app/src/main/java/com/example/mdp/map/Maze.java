@@ -392,7 +392,7 @@ public class Maze extends View implements Serializable {
                 Log.d(TAG, "x = " + obstacles.getaObsX());
                 Log.d(TAG, "y = " + obstacles.getaObsY());
 
-                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + obstacles.getaObsY() + ",";
+                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + convertRow(obstacles.getaObsY()) + ",";
                 String FACE = "OBSTACLEFACE," + obstacles.getObsID() + "," + obstacles.getObsFace() + "|";
 //                obsDetailsString = ADD.concat(FACE);
                 obsDetailsString = obsDetailsString.concat(ADD.concat(FACE));
@@ -901,7 +901,7 @@ public class Maze extends View implements Serializable {
 
                 updateTargetText(obsID, targetID);
                 break;
-            case "ROBOTPOSITION":
+            case "ROBOT":
                 //Get new robot position
 //                x = Integer.valueOf(receivedMessage[1]) + 1;
 //                y = Integer.valueOf(receivedMessage[2]) + 1;
