@@ -75,7 +75,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     EditText etSend;
 
     private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("00001101-0000-1000-8000-00805f9b34aa");
+            UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     BluetoothDevice mBTDevice;
 

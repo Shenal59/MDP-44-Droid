@@ -22,7 +22,7 @@ public class BluetoothConnectionService {
 
     private static final String appName = "MDP Group 44";
 
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805f9b34aa");
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     //Create bluetooth adapter
     private final BluetoothAdapter mBluetoothAdapter;
