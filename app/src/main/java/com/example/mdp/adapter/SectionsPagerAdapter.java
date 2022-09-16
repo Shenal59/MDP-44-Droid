@@ -12,11 +12,12 @@ import com.example.mdp.tabs.ChatFragment;
 import com.example.mdp.Controller.ControllerFragment;
 import com.example.mdp.tabs.ConfigurationFragment;
 import com.example.mdp.R;
+import com.example.mdp.tabs.ObstacleFragment;
 import com.example.mdp.tabs.PlaceholderFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
-    private static final int[] TABS = new int[]{R.string.tab_name1,R.string.tab_name2, R.string.tab_name3};
+    private static final int[] TABS = new int[]{R.string.tab_name1,R.string.tab_name2, R.string.tab_name3, R.string.tab_name4};
 
     private final Context pContext;
 
@@ -35,7 +36,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return ControllerFragment.newInstance(position+1);
             case 2:
                 return ChatFragment.newInstance(position+1);
-
+            case 3:
+                return ObstacleFragment.newInstance(position+1);
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }
@@ -49,7 +51,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount(){
-        return 3;
+        return 4;
     }
 
 }
