@@ -34,7 +34,7 @@ public class Maze extends View implements Serializable {
 
     private static Cell[][] cells;
     private static final int COLS = 20, ROWS = 20;
-//    private static float cellSize, hMargin, vMargin;
+    //    private static float cellSize, hMargin, vMargin;
     private static float cellSize, xMgn, yMgn;
     private static String robotDirection = "north";
     private static int[] obsCoord = new int[]{-1, -1};
@@ -51,7 +51,7 @@ public class Maze extends View implements Serializable {
     private static Paint unexploredPaint = new Paint();
     private static Paint exploredPaint = new Paint();
     private static Paint gridNumberPaint = new Paint();
-//    private static Paint obstacleNumberPaint = new Paint();
+    //    private static Paint obstacleNumberPaint = new Paint();
     private static Paint emptyPaint = new Paint();
     private static Paint virtualWallPaint = new Paint();
 
@@ -80,7 +80,18 @@ public class Maze extends View implements Serializable {
 
     private GestureDetectorCompat mGestureDetector;
     private LongPressGestureListener longPressGestureListener;
+    Toast m_currentToast;
 
+    void showToast(String text)
+    {
+        if(m_currentToast != null)
+        {
+            m_currentToast.cancel();
+        }
+        m_currentToast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+        m_currentToast.show();
+
+    }
 
     public Maze(Context context) {
         super(context);
@@ -168,8 +179,8 @@ public class Maze extends View implements Serializable {
 
                 float xMiddle = ((((x + 1) * cellSize - (cellSize / 40))-(x * cellSize + (cellSize / 30)))/2);
                 float yMiddle =  ((((y + 1) * cellSize - (cellSize / 60))-(y * cellSize + (cellSize / 30)))/2);
-                Log.d(TAG, "CreateCell XMid" + xMiddle);
-                Log.d(TAG, "CreateCell YMid" + yMiddle);
+//                Log.d(TAG, "CreateCell XMid" + xMiddle);
+//                Log.d(TAG, "CreateCell YMid" + yMiddle);
 
             }
         }
@@ -694,10 +705,10 @@ public class Maze extends View implements Serializable {
                 if (obstacles.isTouched(x, y)) {
                     obstacles.setActionDown(false);
                     if(obstacles.getLongPress()){
-                        Toast.makeText(getContext(), "Face annotation disabled for obstacle " + obstacles.obsID, Toast.LENGTH_LONG).show();
+                        showToast("Face annotation disabled for obstacle ");
                         obstacles.setLongPress(false);
                     } else {
-                        Toast.makeText(getContext(), "Face annotation enabled for obstacle " + obstacles.obsID , Toast.LENGTH_LONG).show();
+                        showToast("Face annotation enabled for obstacle ");
                         obstacles.setLongPress(true);
                     }
                 }
@@ -855,7 +866,7 @@ public class Maze extends View implements Serializable {
         }
     }
 
-//    function to receive message from rpi
+    //    function to receive message from rpi
     public void updateMap(String message) {
         Log.d(TAG,"updateMap: Updating Map!");
 
@@ -917,7 +928,7 @@ public class Maze extends View implements Serializable {
                 setRobotDirection(direction);
                 setStartingPoint(true);
             } else {
-                Toast.makeText(getContext(),"Area out of bounce!",Toast.LENGTH_SHORT).show();
+                showToast("Area out of bounce!");
             }
         } else {
             setOldRobotCoord(oldCoord[0], oldCoord[1]);
@@ -926,7 +937,7 @@ public class Maze extends View implements Serializable {
                 setRobotCoordinates(x, y);
                 setRobotDirection(direction);
             } else {
-                Toast.makeText(getContext(),"Area out of bounce!",Toast.LENGTH_SHORT).show();
+                showToast("Area out of bounce!");
                 setRobotCoordinates(oldCoord[0], oldCoord[1]);
                 setRobotDirection(backupDirection);
             }
@@ -938,7 +949,7 @@ public class Maze extends View implements Serializable {
     public void setStartingPoint(boolean status){
         canDrawRobot = true;
         setRobotPosition = status;
-        Toast.makeText(getContext(), "Set robot start point enabled", Toast.LENGTH_LONG).show();
+        showToast("Set robot start point enabled");
     }
 
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -978,14 +989,14 @@ public class Maze extends View implements Serializable {
                         if (robotCoords[1] != 1) {
                             robotCoords[1] -= 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Moving Forward", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Moving Forward");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "right": //"right"
                         robotDirection = "east";
-                        Toast.makeText(getContext(), "Robot: Turning Right", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Right");
                         break;
                     case "reverse": //"back"
                         if (robotCoords[1] != 18) {
@@ -997,11 +1008,11 @@ public class Maze extends View implements Serializable {
                         break;
                     case "left": //"left"
                         robotDirection = "west";
-                        Toast.makeText(getContext(), "Robot: Turning Left", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Left");
                         break;
                     default:
                         robotDirection = "error up";
-                        Toast.makeText(getContext(), "Robot: Reverse", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Reverse");
                         break;
                 }
                 break;
@@ -1012,27 +1023,27 @@ public class Maze extends View implements Serializable {
                         if (robotCoords[0] != 18) {
                             robotCoords[0] += 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Moving Forward", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Moving Forward");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "right":
                         robotDirection = "south";
-                        Toast.makeText(getContext(), "Robot: Turning Right", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Right");
                         break;
                     case "reverse":
                         if (robotCoords[0] != 1) {
                             robotCoords[0] -= 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Reverse", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Reverse");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "left":
                         robotDirection = "north";
-                        Toast.makeText(getContext(), "Robot: Turning Left", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Left");
                         break;
                     default:
                         robotDirection = "error right";
@@ -1045,27 +1056,27 @@ public class Maze extends View implements Serializable {
                         if (robotCoords[1] != 18) {
                             robotCoords[1] += 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Moving Forward", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Moving Forward");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "right":
                         robotDirection = "west";
-                        Toast.makeText(getContext(), "Robot: Turning Right", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Right");
                         break;
                     case "reverse":
                         if (robotCoords[1] != 1) {
                             robotCoords[1] -= 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Reverse", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Reverse");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "left":
                         robotDirection = "east";
-                        Toast.makeText(getContext(), "Robot: Turning Left", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Left");
                         break;
                     default:
                         robotDirection = "error down";
@@ -1078,27 +1089,27 @@ public class Maze extends View implements Serializable {
                         if (robotCoords[0] != 1) {
                             robotCoords[0] -= 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Moving Forward", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Moving Forward");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "right":
                         robotDirection = "north";
-                        Toast.makeText(getContext(), "Robot: Turning Right", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Right");
                         break;
                     case "reverse":
                         if (robotCoords[0] != 18) {
                             robotCoords[0] += 1;
                             validPosition = true;
-                            Toast.makeText(getContext(), "Robot: Reverse", Toast.LENGTH_LONG).show();
+                            showToast("Robot: Reverse");
                         } else {
                             setValidPosition(false);
                         }
                         break;
                     case "left":
                         robotDirection = "south";
-                        Toast.makeText(getContext(), "Robot: Turning Left", Toast.LENGTH_LONG).show();
+                        showToast("Robot: Turning Left");
                         break;
                     default:
                         robotDirection = "error left";
