@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static Maze gridMap;
 
-    static TextView xCoord, yCoord;
+    static TextView xCoord, yCoord, robotD, robotP;
 
 
     @Override
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         xCoord = findViewById(R.id.xCoordinate);
         yCoord = findViewById(R.id.yCoordinate);
+        robotD = findViewById(R.id.txtRobotDirection);
+        robotP = findViewById(R.id.txtRobotPosition);
 //        viewPager.setOffscreenPageLimit(100);
 //        TabLayout tabs = findViewById(R.id.tabs);
 //        tabs.setupWithViewPager(viewPager);
@@ -68,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
     public static void setyCoord(int y){
         yCoord.setText(String.valueOf(y));
     }
+
+    public static void setRobotD(String j){
+        robotD.setText(j);
+    }
+
+    public static void setRobotP(int x,int y){
+        String z = String.valueOf(x) + " , " + String.valueOf(y);
+        robotP.setText(z);
+    }
+
 
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override

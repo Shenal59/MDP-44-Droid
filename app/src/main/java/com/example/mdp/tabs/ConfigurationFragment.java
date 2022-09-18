@@ -33,7 +33,6 @@ public class ConfigurationFragment extends Fragment {
 
     Button bluetoothButton;
     Button resetButton;
-    Button obstacleFaceButton;
     Button robotStartButton;
     Button sendObstacleCoordButton;
 
@@ -72,7 +71,6 @@ public class ConfigurationFragment extends Fragment {
         View root =  inflater.inflate(R.layout.fragment_configuration, container, false);
         bluetoothButton = root.findViewById(R.id.bluetoothButton);
         resetButton = root.findViewById(R.id.resetButton);
-        obstacleFaceButton = root.findViewById(R.id.faceButton);
         robotStartButton = root.findViewById(R.id.robotStartPtButton);
         sendObstacleCoordButton = root.findViewById(R.id.sendObstacleCoordButton);
         map = MainActivity.getMap();
@@ -111,13 +109,6 @@ public class ConfigurationFragment extends Fragment {
             @Override
             public void onClick(View view){
                 map.resetMap();
-            }
-        });
-
-        obstacleFaceButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                map.setObstacleFace();
             }
         });
 

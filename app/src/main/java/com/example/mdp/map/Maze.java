@@ -36,7 +36,7 @@ public class Maze extends View implements Serializable {
     private static final int COLS = 20, ROWS = 20;
     //    private static float cellSize, hMargin, vMargin;
     private static float cellSize, xMgn, yMgn;
-    private static String robotDirection = "north";
+    private static String robotDirection = "North";
     private static int[] obsCoord = new int[]{-1, -1};
     private static int[] robotCoords = new int[]{-1, -1}; //these coordinates represent robotcoords, think i can change it to "robotCoordinates"
     private static int[] oldRobotCoord = new int[]{-1, -1};
@@ -530,7 +530,7 @@ public class Maze extends View implements Serializable {
     //Resetting Arena by resetting everything
     public void resetMap(){
         robotCoords = new int [] {-1, -1};
-        robotDirection = "north";
+        robotDirection = "North";
         createCellStatus = false;
         setRobotPosition = false;
         canDrawRobot = false;
@@ -758,13 +758,13 @@ public class Maze extends View implements Serializable {
     public void setRobotDirection(String direction){
         Log.d(TAG,"setRobotDirection");
         if(direction.equals("N")){
-            robotDirection = "north";
+            robotDirection = "North";
         } else if (direction.equals("E")){
-            robotDirection = "east";
+            robotDirection = "East";
         } else if (direction.equals("S")) {
-            robotDirection = "south";
+            robotDirection = "South";
         } else if (direction.equals("W")){
-            robotDirection = "west";
+            robotDirection = "West";
         }
         Log.d(TAG,robotDirection);
     }
@@ -807,7 +807,7 @@ public class Maze extends View implements Serializable {
     public void setRobotCoordinates(int col, int row) {
         Log.d(TAG,"Entering setRobotCoord");
         robotCoords[0] = col;
-//        robotCoords[1] = convertRow(row);
+        //robotCoords[1] = convertRow(row);
         robotCoords[1] = row;
         Log.d(TAG, col + "," + row);
 
@@ -824,6 +824,8 @@ public class Maze extends View implements Serializable {
         int x = robotCoordinates[0];
         int y = robotCoordinates[1];
         String direction = getRobotDirection();
+        MainActivity.setRobotD(getRobotDirection());
+        MainActivity.setRobotP(x, convertRow(y));
 
         if(x != -1 && y != -1){
             float halfWidth = ((cells[x][y - 1].endX) - (cells[x][y - 1].startX)) / 2;
@@ -848,25 +850,25 @@ public class Maze extends View implements Serializable {
 
             //drawing the path
             switch (direction){
-                case "north":
+                case "North":
                     path.moveTo(cells[x][y - 1].startX + halfWidth, cells[x][y - 1].startY); // Top
                     path.lineTo(cells[x][y - 1].startX, cells[x][y - 1].endY); // Bottom left
                     path.lineTo(cells[x][y - 1].endX, cells[x][y - 1].endY); // Bottom right
                     path.lineTo(cells[x][y - 1].startX + halfWidth, cells[x][y - 1].startY); // Back to Top
                     break;
-                case "south":
+                case "South":
                     path.moveTo(cells[x][y + 1].endX - halfWidth, cells[x][y + 1].endY); // Top
                     path.lineTo(cells[x][y + 1].startX, cells[x][y + 1].startY); // Bottom left
                     path.lineTo(cells[x + 1][y + 1].startX, cells[x +1][y + 1].startY); // Bottom right
                     path.lineTo(cells[x][y + 1].endX - halfWidth, cells[x][y + 1].endY); // Back to Top
                     break;
-                case "east":
+                case "East":
                     path.moveTo(cells[x+1][y].startX + (2*halfWidth), cells[x][y].startY + halfWidth); // Top
                     path.lineTo(cells[x+1][y].startX, cells[x+1][y].startY); // Bottom left
                     path.lineTo(cells[x+1][y+1].startX, cells[x+1][y+1].startY); // Bottom right
                     path.lineTo(cells[x+1][y].startX + (2*halfWidth) , cells[x][y].startY + halfWidth); // Back to Top
                     break;
-                case "west":
+                case "West":
                     path.moveTo(cells[x-1][y].startX, cells[x][y].startY + halfWidth); // Top
                     path.lineTo(cells[x][y].startX, cells[x][y].startY); // Bottom left
                     path.lineTo(cells[x][y + 1].startX, cells[x][y  +1].startY); // Bottom right
@@ -995,7 +997,7 @@ public class Maze extends View implements Serializable {
 
 //        Robot movement depends on the arrow/direction of the robot.
         switch (currDirection) {
-            case "north":
+            case "North":
                 //Ensure that center of the body is within this area
                 if((x != 0 && x != 19) && (y != 0 && y != 19)){
                     validPosition = true;
@@ -1011,7 +1013,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "right": //"right"
-                        robotDirection = "east";
+                        robotDirection = "East";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
                     case "reverse": //"back"
@@ -1023,7 +1026,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "left": //"left"
-                        robotDirection = "west";
+                        robotDirection = "West";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
                         break;
                     default:
@@ -1033,7 +1037,7 @@ public class Maze extends View implements Serializable {
                 }
                 break;
             case "90":
-            case "east":
+            case "East":
                 switch (movement) {
                     case "forward":
                         if (robotCoords[0] != 18) {
@@ -1045,7 +1049,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "right":
-                        robotDirection = "south";
+                        robotDirection = "South";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
                     case "reverse":
@@ -1058,7 +1063,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "left":
-                        robotDirection = "north";
+                        robotDirection = "North";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
                         break;
                     default:
@@ -1066,7 +1072,7 @@ public class Maze extends View implements Serializable {
                 }
                 break;
             case "180":
-            case "south":
+            case "South":
                 switch (movement) {
                     case "forward":
                         if (robotCoords[1] != 18) {
@@ -1078,7 +1084,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "right":
-                        robotDirection = "west";
+                        robotDirection = "West";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
                     case "reverse":
@@ -1091,7 +1098,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "left":
-                        robotDirection = "east";
+                        robotDirection = "East";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
                         break;
                     default:
@@ -1099,7 +1107,7 @@ public class Maze extends View implements Serializable {
                 }
                 break;
             case "270":
-            case "west":
+            case "West":
                 switch (movement) {
                     case "forward":
                         if (robotCoords[0] != 1) {
@@ -1111,7 +1119,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "right":
-                        robotDirection = "north";
+                        robotDirection = "North";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
                     case "reverse":
@@ -1124,7 +1133,8 @@ public class Maze extends View implements Serializable {
                         }
                         break;
                     case "left":
-                        robotDirection = "south";
+                        robotDirection = "South";
+                        MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
                         break;
                     default:
