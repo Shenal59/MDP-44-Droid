@@ -757,13 +757,13 @@ public class Maze extends View implements Serializable {
 
     public void setRobotDirection(String direction){
         Log.d(TAG,"setRobotDirection");
-        if(direction.equals("N")){
+        if(direction.equals("0")){
             robotDirection = "North";
-        } else if (direction.equals("E")){
+        } else if (direction.equals("2")){
             robotDirection = "East";
-        } else if (direction.equals("S")) {
+        } else if (direction.equals("1")) {
             robotDirection = "South";
-        } else if (direction.equals("W")){
+        } else if (direction.equals("3")){
             robotDirection = "West";
         }
         Log.d(TAG,robotDirection);
@@ -907,6 +907,9 @@ public class Maze extends View implements Serializable {
                 //Get new robot position
 //                x = Integer.valueOf(receivedMessage[1]) + 1;
 //                y = Integer.valueOf(receivedMessage[2]) + 1;
+                if (receivedMessage.length!=4){
+                    return;
+                }
                 x = Integer.valueOf(receivedMessage[1]);
                 y = Integer.valueOf(receivedMessage[2]);
                 System.out.println("Checking coordinates received");
