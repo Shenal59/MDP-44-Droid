@@ -120,13 +120,22 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         public void onReceive(Context context, Intent intent) {
             BluetoothDevice btDevice = intent.getParcelableExtra("Device");
             String status = intent.getStringExtra("Status");
+            Log.d(TAG, "123123 status: "+status+" btdevice: "+btDevice+" mbtdevice: "+mBTDevice);
 
-            if (btDevice==null){
+            if (btDevice==null && mBTDevice==null ){
                 Log.d(TAG, "btDevice: null");
 
                 return;
             }
-            if (status.equals("connected")) {
+
+
+            BluetoothDevice connectedDevice = btDevice == null ? mBTDevice:btDevice ;
+
+
+            if (status.equals("connected")){
+                // means it is connected to a device either btDevice or mBTDevice
+                // random logs
+
                 Log.d(TAG, "connectionReceiver: connected");
 //                try {
 //                    dialog.dismiss();
@@ -137,12 +146,14 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
 
 //                textViewStatus.setText("Connected");
                 Toast.makeText(BluetoothActivity.this, "Device now connected to "
-                        + btDevice.getName(), Toast.LENGTH_LONG).show();
+                        + connectedDevice.getName(), Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (status.equals("disconnected") && retryConnect == false) {
 
-            } else if (status.equals("disconnected") && retryConnect == false) {
                 Log.d(TAG, "connectionReceiver: disconnected");
                 Toast.makeText(BluetoothActivity.this, "Disconnected from "
-                        + btDevice.getName(), Toast.LENGTH_LONG).show();
+                        + connectedDevice.getName(), Toast.LENGTH_LONG).show();
                 mBluetoothConnection = new BluetoothConnectionService(BluetoothActivity.this);
 
 //                textViewStatus.setText("Disconnected");
