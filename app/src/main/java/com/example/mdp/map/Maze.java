@@ -927,7 +927,7 @@ public class Maze extends View implements Serializable {
                 movement = receivedMessage[1];
                 Log.d(TAG, "updateMap: Move " + movement);
 
-//                moveRobot(movement);
+                moveRobot(movement);
                 break;
         }
     }
@@ -1006,7 +1006,7 @@ public class Maze extends View implements Serializable {
                     validPosition = true;
                 }
                 switch (movement) {
-                    case "forward": //"forward"
+                    case "w": //"w"
                         if (robotCoords[1] != 1) {
                             robotCoords[1] -= 1;
                             validPosition = true;
@@ -1015,12 +1015,12 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "right": //"right"
+                    case "d": //"d"
                         robotDirection = "East";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
-                    case "reverse": //"back"
+                    case "s": //"back"
                         if (robotCoords[1] != 18) {
                             robotCoords[1] += 1;
                             validPosition = true;
@@ -1028,7 +1028,7 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "left": //"left"
+                    case "a": //"a"
                         robotDirection = "West";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
@@ -1042,7 +1042,7 @@ public class Maze extends View implements Serializable {
             case "90":
             case "East":
                 switch (movement) {
-                    case "forward":
+                    case "w":
                         if (robotCoords[0] != 18) {
                             robotCoords[0] += 1;
                             validPosition = true;
@@ -1051,12 +1051,12 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "right":
+                    case "d":
                         robotDirection = "South";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
-                    case "reverse":
+                    case "s":
                         if (robotCoords[0] != 1) {
                             robotCoords[0] -= 1;
                             validPosition = true;
@@ -1065,7 +1065,7 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "left":
+                    case "a":
                         robotDirection = "North";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
@@ -1077,7 +1077,7 @@ public class Maze extends View implements Serializable {
             case "180":
             case "South":
                 switch (movement) {
-                    case "forward":
+                    case "w":
                         if (robotCoords[1] != 18) {
                             robotCoords[1] += 1;
                             validPosition = true;
@@ -1086,12 +1086,12 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "right":
+                    case "d":
                         robotDirection = "West";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
-                    case "reverse":
+                    case "s":
                         if (robotCoords[1] != 1) {
                             robotCoords[1] -= 1;
                             validPosition = true;
@@ -1100,7 +1100,7 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "left":
+                    case "a":
                         robotDirection = "East";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
@@ -1112,7 +1112,7 @@ public class Maze extends View implements Serializable {
             case "270":
             case "West":
                 switch (movement) {
-                    case "forward":
+                    case "w":
                         if (robotCoords[0] != 1) {
                             robotCoords[0] -= 1;
                             validPosition = true;
@@ -1121,12 +1121,12 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "right":
+                    case "d":
                         robotDirection = "North";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Right");
                         break;
-                    case "reverse":
+                    case "s":
                         if (robotCoords[0] != 18) {
                             robotCoords[0] += 1;
                             validPosition = true;
@@ -1135,7 +1135,7 @@ public class Maze extends View implements Serializable {
                             setValidPosition(false);
                         }
                         break;
-                    case "left":
+                    case "a":
                         robotDirection = "South";
                         MainActivity.setRobotD(getRobotDirection());
                         showToast("Robot: Turning Left");
