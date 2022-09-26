@@ -66,7 +66,7 @@ public class ControllerFragment extends Fragment {
         fwdButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                map.moveRobot("forward");//prevention of movement outside of the map is done inside moveRobot function itself
+                map.moveRobot("w");//prevention of movement outside of the map is done inside moveRobot function itself
                 //Add Bluetooth connection instructions here @BT
                 try {
                     BluetoothConnectionService.sendBT("w");
@@ -80,7 +80,7 @@ public class ControllerFragment extends Fragment {
         reverseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                map.moveRobot("reverse");
+                map.moveRobot("s");
                 //Add Bluetooth connection instructions here @BT
                 try {
                     BluetoothConnectionService.sendBT("s");
@@ -94,7 +94,7 @@ public class ControllerFragment extends Fragment {
         leftButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                map.moveRobot("left");
+                map.moveRobot("a");
                 //Add Bluetooth connection instructions here @BT
                 try {
                     BluetoothConnectionService.sendBT("a");
@@ -108,7 +108,7 @@ public class ControllerFragment extends Fragment {
         rightButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                map.moveRobot("right");
+                map.moveRobot("d");
                 //Add Bluetooth connection instructions here @BT
                 try {
                     BluetoothConnectionService.sendBT("d");
