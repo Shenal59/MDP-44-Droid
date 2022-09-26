@@ -98,7 +98,33 @@ public class ChatFragment extends Fragment {
             String message = intent.getStringExtra("theMessage");
             Log.d(TAG,message);
 //            gridMap.updateMap(message);
-            showReceived.setText(message);
+
+            String receivedMessage [] = message.split(",");
+            String item = receivedMessage[0];
+
+            switch (item.toUpperCase()){
+                case "TARGET":
+                    showReceived.setText("Set Target ID");
+                    break;
+                case "ROBOT":
+                    showReceived.setText("Set Robot Position");
+
+                    break;
+                case "MOVE":
+                    showReceived.setText("Moving robot");
+
+                    break;
+                case "MSG":
+                    if (receivedMessage.length<2){
+                        return;
+                    }
+                    showReceived.setText(receivedMessage[1]);
+
+                    break;
+                default:
+                    showReceived.setText(message);
+                    break;
+            }
         }
     };
 
