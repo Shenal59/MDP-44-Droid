@@ -319,13 +319,19 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: called.");
         super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver1);
-        unregisterReceiver(mBroadcastReceiver2);
-        unregisterReceiver(mBroadcastReceiver3);
-        unregisterReceiver(mBroadcastReceiver4);
-        unregisterReceiver(mBroadcastReceiver5);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(connectionReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        try{
+            unregisterReceiver(mBroadcastReceiver1);
+            unregisterReceiver(mBroadcastReceiver2);
+            unregisterReceiver(mBroadcastReceiver3);
+            unregisterReceiver(mBroadcastReceiver4);
+            unregisterReceiver(mBroadcastReceiver5);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(connectionReceiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+
+        }catch (Exception e){
+            Log.e(TAG, e.getMessage());
+
+        }
 
         //mBluetoothAdapter.cancelDiscovery();
     }
@@ -407,8 +413,9 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
-                startActivityForResult(myIntent, 0);
+                onBackPressed();
+//                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
+//                startActivityForResult(myIntent, 0);
             }
         });
     }
