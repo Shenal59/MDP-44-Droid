@@ -214,6 +214,7 @@ public class BluetoothConnectionService {
      * */
     public void startClient(BluetoothDevice device, UUID uuid) {
         Log.d(TAG, "startClient: Started.");
+        Log.d(TAG, "startClient: "+device.getName() +" "+device.getAddress());
 
         //initprogress dialog
         try {
