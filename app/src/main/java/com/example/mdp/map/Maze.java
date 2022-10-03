@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -26,6 +28,7 @@ import com.example.mdp.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Maze extends View implements Serializable {
@@ -382,8 +385,10 @@ public class Maze extends View implements Serializable {
     }
 
     //this function is used to get a string message of the obstacles
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String getObstacleCoordString(){
         String obsDetailsString = "";
+        List<String> obsDetailsStringList = new ArrayList<>();
         for (Obstacle obstacles : obstacleList) {
 
 //            if (!((obstacles.getaObsX() == 0) && (obstacles.getaObsY() == 0) && (obstacles.getObsFace().equals(" ")))){
@@ -392,14 +397,34 @@ public class Maze extends View implements Serializable {
                 Log.d(TAG, "x = " + obstacles.getaObsX());
                 Log.d(TAG, "y = " + obstacles.getaObsY());
 
-                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + convertRow(obstacles.getaObsY()) + ",";
-                String FACE = "OBSTACLEFACE," + obstacles.getObsID() + "," + obstacles.getObsFace() + "|";
+
+                String direction = "N";
+                switch (obstacles.getObsFace()){
+                    case 0:
+                        direction="N";
+                        break;
+                    case 1:
+                        direction="S";
+                        break;
+                    case 2:
+                        direction="E";
+                        break;
+                    case 3:
+                        direction="W";
+                        break;
+                }
+                String ADD = obstacles.getObsID()+","+obstacles.getaObsX() + "," + convertRow(obstacles.getaObsY())+","+direction;
+                obsDetailsStringList.add(ADD);
+//                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + conve
+//                rtRow(obstacles.getaObsY()) + ",";
+//                String FACE = "OBSTACLEFACE," + obstacles.getObsID() + "," + obstacles.getObsFace() + "|";
 //                obsDetailsString = ADD.concat(FACE);
-                obsDetailsString = obsDetailsString.concat(ADD.concat(FACE));
+//                obsDetailsString = obsDetailsString.concat(ADD);
 
 
             }
         }
+        obsDetailsString= String.join("-", obsDetailsStringList);
         Log.d(TAG, obsDetailsString);
         return obsDetailsString;
     }
@@ -888,48 +913,78 @@ public class Maze extends View implements Serializable {
     public void updateMap(String message) {
         Log.d(TAG,"updateMap: Updating Map!");
 
-        int robotCoordinates [] = getRobotCoords();
-        String receivedMessage [] = message.split(",");
+//        int robotCoordinates [] = getRobotCoords();
+        String receivedMessage [] = message.split("-");
         String item = receivedMessage[0];
-        int x,y;
-        String obsID, targetID;
-        String direction, movement;
+//        int x,y;
+//        String obsID, targetID;
+//        String direction, movement;
 
-        switch (item.toUpperCase()){
-            case "TARGET":
-                //Update obstacle by displaying image ID
-                obsID = receivedMessage[1];
-                targetID = receivedMessage[2];
+        try{
+            if (receivedMessage.length>=2){
+                switch (item.toUpperCase()){
+                    case "O":
+                        //Update obstacle by displaying image ID
+                        String obsAndTargetID []= receivedMessage[1].split(",");
+//                    obsID = receivedMessage[1];
+//                    targetID = receivedMessage[2];
 
-                updateTargetText(obsID, targetID);
-                break;
-            case "ROBOT":
-                //Get new robot position
-//                x = Integer.valueOf(receivedMessage[1]) + 1;
-//                y = Integer.valueOf(receivedMessage[2]) + 1;
-                if (receivedMessage.length!=4){
-                    return;
+                        updateTargetText(obsAndTargetID[0], obsAndTargetID[1]);
+                        break;
+//                    case "ROBOT":
+//                        //Get new robot position
+////                x = Integer.valueOf(receivedMessage[1]) + 1;
+////                y = Integer.valueOf(receivedMessage[2]) + 1;
+//                        if (receivedMessage.length!=4){
+//                            return;
+//                        }
+//                        x = Integer.valueOf(receivedMessage[1]);
+//                        y = Integer.valueOf(receivedMessage[2]);
+//                        System.out.println("Checking coordinates received");
+//                        System.out.println(x);
+//                        System.out.println(y);
+//                        direction = receivedMessage[3];
+//
+//                        Log.d(TAG, "New coordinates: " + x + "," + y);
+//                        Log.d(TAG, "Direction " + direction);
+//
+//                        moveRobot(x,convertRow(y),direction);
+//                        break;
+                    case "M":
+                        //Get robot movement
+                        String movementInstructions []= receivedMessage[1].split(","); //m-w,5,d,w,2
+
+                        for (int i=0;i<movementInstructions.length;i++ ){
+                            Log.d(TAG, "Instruction "+movementInstructions[i]);
+                            switch(movementInstructions[i]){
+                                case "w":
+                                case "s":
+                                    int times = Integer.parseInt(movementInstructions[i+1]);
+                                    for (int j=0;j<times;j++){
+                                        moveRobot(movementInstructions[i]);
+//                                        Thread.sleep(500);
+                                    }
+                                    break;
+                                case "a":
+                                case "d":
+                                    moveRobot(movementInstructions[i]);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+//                        movement = receivedMessage[1];
+//                        Log.d(TAG, "updateMap: Move " + movement);
+//
+//                        moveRobot(movement);
+                        break;
                 }
-                x = Integer.valueOf(receivedMessage[1]);
-                y = Integer.valueOf(receivedMessage[2]);
-                System.out.println("Checking coordinates received");
-                System.out.println(x);
-                System.out.println(y);
-                direction = receivedMessage[3];
-
-                Log.d(TAG, "New coordinates: " + x + "," + y);
-                Log.d(TAG, "Direction " + direction);
-
-                moveRobot(x,convertRow(y),direction);
-                break;
-            case "MOVE":
-                //Get robot movement
-                movement = receivedMessage[1];
-                Log.d(TAG, "updateMap: Move " + movement);
-
-                moveRobot(movement);
-                break;
+            }
+        }catch(Exception e){
+            Log.e(TAG, e.getMessage());
         }
+
+
     }
 
     public void moveRobot(int x, int y, String direction) {
@@ -973,15 +1028,15 @@ public class Maze extends View implements Serializable {
         showToast("Set robot start point enabled");
     }
 
-    BroadcastReceiver messageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra("receivedMessage");
-            Log.d(TAG,message);
-            System.out.println("Checking updatemap");
-            updateMap(message);
-        }
-    };
+//    BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String message = intent.getStringExtra("receivedMessage");
+//            Log.d(TAG,message);
+//            System.out.println("Checking updatemap");
+//            updateMap(message);
+//        }
+//    };
 
 
     public void moveRobot(String movement){
