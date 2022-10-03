@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         gridMap = findViewById(R.id.mapView);
 
         //
+        Log.d(TAG,"create main activity");
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("incomingMessage"));
 
         //setting up the tab layout with controls etc
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
 //        tabs.setupWithViewPager(viewPager);
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"destroy main activity");
+
+        unregisterReceiver(messageReceiver);
     }
 
     public static Maze getMap(){
