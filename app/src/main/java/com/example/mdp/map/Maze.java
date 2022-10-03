@@ -401,19 +401,19 @@ public class Maze extends View implements Serializable {
                 String direction = "N";
                 switch (obstacles.getObsFace()){
                     case 0:
-                        direction="N";
+                        direction="90";
                         break;
                     case 1:
-                        direction="S";
+                        direction="-90";
                         break;
                     case 2:
-                        direction="E";
+                        direction="0";
                         break;
                     case 3:
-                        direction="W";
+                        direction="180";
                         break;
                 }
-                String ADD = obstacles.getObsID()+","+obstacles.getaObsX() + "," + convertRow(obstacles.getaObsY())+","+direction;
+                String ADD = obstacles.getaObsX()*10 + "," + convertRow(obstacles.getaObsY())*10+","+direction+","+obstacles.getObsID();
                 obsDetailsStringList.add(ADD);
 //                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + conve
 //                rtRow(obstacles.getaObsY()) + ",";
@@ -424,7 +424,7 @@ public class Maze extends View implements Serializable {
 
             }
         }
-        obsDetailsString= String.join("-", obsDetailsStringList);
+        obsDetailsString= String.join(";", obsDetailsStringList);
         Log.d(TAG, obsDetailsString);
         return obsDetailsString;
     }
