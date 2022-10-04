@@ -413,7 +413,7 @@ public class Maze extends View implements Serializable {
                         direction="180";
                         break;
                 }
-                String ADD = obstacles.getaObsX()*10 + "," + convertRow(obstacles.getaObsY())*10+","+direction+","+obstacles.getObsID();
+                String ADD = (obstacles.getaObsX()*10+5) + "," + (convertRow(obstacles.getaObsY())*10+5)+","+direction+","+obstacles.getObsID();
                 obsDetailsStringList.add(ADD);
 //                String ADD = "ADDOBSTACLE," + obstacles.getObsID() + "," + obstacles.getaObsX() + "," + conve
 //                rtRow(obstacles.getaObsY()) + ",";
